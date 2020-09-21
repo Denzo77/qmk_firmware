@@ -69,11 +69,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX,\
+      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,  XXXXXXX, KC_HOME,   KC_UP,  KC_END, KC_PGUP,                      KC_BSPC, KC_PLUS, KC_ASTR, KC_LBRC, KC_RBRC, XXXXXXX,\
+      _______,  XXXXXXX, KC_HOME,   KC_UP,  KC_END, KC_PGUP,                     KC_BSPC, KC_PLUS, KC_ASTR, KC_LBRC, KC_RBRC, _______,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,  XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,                       KC_DEL, KC_MINS,  KC_EQL, KC_NUBS, KC_SLSH, XXXXXXX,\
+      _______,  XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,                      KC_DEL, KC_MINS,  KC_EQL, KC_NUBS, KC_SLSH, _______,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______ \
                                       //`--------------------------'  `--------------------------'
@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______,   LOWER, _______,    _______, _______, _______ \
+                                          _______,   LOWER,  KC_TAB,    _______, _______, _______ \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -137,43 +137,39 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
 const rgblight_segment_t PROGMEM  my_default_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {0,     6, HSV_MAGENTA},  // BACKLIGHT
     {11,    1, HSV_MAGENTA},  // HOME
-    {24,    1, HSV_RED},      // PLOVER
     {0+27,  6, HSV_MAGENTA},  // BACKLIGHT
     {11+27, 1, HSV_MAGENTA}   // HOME
 );
 const rgblight_segment_t PROGMEM  my_caps_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,     6, HSV_ORANGE},     // BACKLIGHT
     {11,    1, HSV_ORANGE},     // HOME
     {25,    1, HSV_ORANGE},     // CAPS
-    {24,    1, HSV_RED},        // PLOVER
-    {0+27,  6, HSV_ORANGE},     // BACKLIGHT
     {11+27, 1, HSV_ORANGE}      // HOME
 );
 const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,     6, HSV_PURPLE},     // BACKLIGHT
-    {12,    1, HSV_PURPLE},     // RIGHT
-    {15,    2, HSV_PURPLE},     // UP/DOWN
-    {20,    1, HSV_PURPLE},     // LEFT
-    {0+27,  6, HSV_PURPLE}      // BACKLIGHT
+    {12,    1, HSV_MAGENTA},     // RIGHT
+    {15,    2, HSV_MAGENTA},     // UP/DOWN
+    {20,    1, HSV_MAGENTA}     // LEFT
 );
-const rgblight_segment_t PROGMEM my_raise_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,    6, HSV_BLUE},        // BACKLIGHT
-    {0+27, 6, HSV_BLUE}         // BACKLIGHT
-);
-const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,    6, HSV_GREEN},       // BACKLIGHT
-    {0+27, 6, HSV_GREEN}        // BACKLIGHT
-);
+// const rgblight_segment_t PROGMEM my_raise_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+//     // {0,    6, HSV_BLUE},        // BACKLIGHT
+//     // {0+27, 6, HSV_BLUE}         // BACKLIGHT
+// );
+// const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+//     // {0,    6, HSV_GREEN},       // BACKLIGHT
+//     // {0+27, 6, HSV_GREEN}        // BACKLIGHT
+// );
 const rgblight_segment_t PROGMEM my_plover_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {0,    6, HSV_RED},         // BACKLIGHT
-    {24,   1, HSV_MAGENTA},     // DEFAULT
+    {11,   1, HSV_RED},         // HOME
+    {24,   1, HSV_RED},         // PLOVER
+    {11+27, 1, HSV_RED},          // HOME
     {0+27, 6, HSV_RED}          // BACKLIGHT
 );
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     my_default_layer,
     my_lower_layer,
-    my_raise_layer,
-    my_adjust_layer,
+    // my_raise_layer,
+    // my_adjust_layer,
     my_plover_layer,
     my_caps_layer
 );
@@ -190,18 +186,18 @@ void keyboard_post_init_user(void) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(_QWERTY, layer_state_cmp(state, _QWERTY));
-    rgblight_set_layer_state(_LOWER,  layer_state_cmp(state, _LOWER));
-    rgblight_set_layer_state(_RAISE,  layer_state_cmp(state, _RAISE));
-    rgblight_set_layer_state(_ADJUST, layer_state_cmp(state, _ADJUST));
-    rgblight_set_layer_state(_PLOVER, layer_state_cmp(state, _PLOVER));
+    rgblight_set_layer_state(0, layer_state_cmp(state, _QWERTY));
+    rgblight_set_layer_state(1,  layer_state_cmp(state, _LOWER));
+    // rgblight_set_layer_state(_RAISE,  layer_state_cmp(state, _RAISE));
+    // rgblight_set_layer_state(_ADJUST, layer_state_cmp(state, _ADJUST));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _PLOVER));
     return state;
 }
 
 
 // FIXME: This one only updates the master.
 bool led_update_user(led_t led_state) {
-    rgblight_set_layer_state(5, led_state.caps_lock);
+    rgblight_set_layer_state(3, led_state.caps_lock);
     return true;
 }
 
