@@ -51,7 +51,7 @@ enum macro_keycodes {
 // Tap for key, hold for shift.
 #define SFT_ENT LSFT_T(KC_ENTER)
 #define SFT_SPC RSFT_T(KC_SPACE)
-#define SFT_UNDS RSFT_T(KC_UNDS)
+// #define SFT_UNDS RSFT_T(KC_MINS)  // This cannot send an underscore :(
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x6_3( \
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_MPRV,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                        KC_LCTL,    LOW_TT, SFT_ENT,   SFT_SPC,  RAISE,  KC_RCTL \
+                                          KC_LCTL,  LOW_TT, SFT_ENT,    SFT_SPC,   RAISE, KC_RCTL \
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -75,19 +75,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,  XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,                       KC_DEL, KC_MINS,  KC_EQL, KC_NUBS, KC_SLSH, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,   SFT_UNDS, _______, _______ \
+                                          _______, _______, _______,    _______, _______, _______ \
                                       //`--------------------------'  `--------------------------'
     ),
 
   [_RAISE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,  KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,\
+      _______,  KC_ESC, XXXXXXX, KC_DQUO, KC_QUOT, XXXXXXX,                      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_PIPE, KC_NUHS, KC_DQUO, KC_QUOT, XXXXXXX,                      XXXXXXX,   KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,\
+      _______, KC_PIPE, KC_NUHS, XXXXXXX, KC_UNDS, XXXXXXX,                      XXXXXXX,   KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______ \
+                                          _______,   LOWER, _______,    _______, _______, _______ \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -118,6 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 int RGB_current_mode;
 
+
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
@@ -131,6 +132,64 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
     layer_off(layer3);
   }
 }
+
+
+const rgblight_segment_t PROGMEM  my_default_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0,     6, HSV_MAGENTA},
+    {11,    1, HSV_MAGENTA},
+    {0+27,  6, HSV_MAGENTA},
+    {11+27, 1, HSV_MAGENTA}
+);
+const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0,     6, HSV_PURPLE},
+    {12,    1, HSV_PURPLE},
+    {15,    2, HSV_PURPLE},
+    {20,    1, HSV_PURPLE},
+    {0+27,  6, HSV_PURPLE}
+);
+const rgblight_segment_t PROGMEM my_raise_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0,    6, HSV_BLUE},
+    {0+27, 6, HSV_BLUE}
+);
+const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0,    6, HSV_GREEN},
+    {0+27, 6, HSV_GREEN}
+);
+const rgblight_segment_t PROGMEM my_plover_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0,    6, HSV_RED},
+    {0+27, 6, HSV_RED}
+);
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_default_layer,
+    my_lower_layer,
+    my_raise_layer,
+    my_adjust_layer,
+    my_plover_layer
+);
+
+void keyboard_post_init_user(void) {
+    // isLeftHand = is_keyboard_left();
+    uint8_t num_rgb_leds_split[2] = RGBLED_SPLIT;
+    if (isLeftHand) {
+        rgblight_set_clipping_range(0, num_rgb_leds_split[0]);
+    } else {
+        rgblight_set_clipping_range(num_rgb_leds_split[0], num_rgb_leds_split[1]);
+    }
+    rgblight_layers = my_rgb_layers;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(_QWERTY, layer_state_cmp(state, _QWERTY));
+    rgblight_set_layer_state(_LOWER,  layer_state_cmp(state, _LOWER));
+    rgblight_set_layer_state(_RAISE,  layer_state_cmp(state, _RAISE));
+    rgblight_set_layer_state(_ADJUST, layer_state_cmp(state, _ADJUST));
+    rgblight_set_layer_state(_PLOVER, layer_state_cmp(state, _PLOVER));
+    return state;
+}
+
+// bool led_update_user(led_t led_state) {
+//     rgblight_set_layer_state(0, led_state.caps_lock)
+// }
 
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
