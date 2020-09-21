@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        PLOVER,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_MPLY,\
   //|--------+--------+-co-------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_MNXT,\
+      KC_CAPS,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_MNXT,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_MPRV,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -135,36 +135,47 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
 
 
 const rgblight_segment_t PROGMEM  my_default_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,     6, HSV_MAGENTA},
-    {11,    1, HSV_MAGENTA},
-    {0+27,  6, HSV_MAGENTA},
-    {11+27, 1, HSV_MAGENTA}
+    {0,     6, HSV_MAGENTA},  // BACKLIGHT
+    {11,    1, HSV_MAGENTA},  // HOME
+    {24,    1, HSV_RED},      // PLOVER
+    {0+27,  6, HSV_MAGENTA},  // BACKLIGHT
+    {11+27, 1, HSV_MAGENTA}   // HOME
+);
+const rgblight_segment_t PROGMEM  my_caps_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0,     6, HSV_ORANGE},     // BACKLIGHT
+    {11,    1, HSV_ORANGE},     // HOME
+    {25,    1, HSV_ORANGE},     // CAPS
+    {24,    1, HSV_RED},        // PLOVER
+    {0+27,  6, HSV_ORANGE},     // BACKLIGHT
+    {11+27, 1, HSV_ORANGE}      // HOME
 );
 const rgblight_segment_t PROGMEM my_lower_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,     6, HSV_PURPLE},
-    {12,    1, HSV_PURPLE},
-    {15,    2, HSV_PURPLE},
-    {20,    1, HSV_PURPLE},
-    {0+27,  6, HSV_PURPLE}
+    {0,     6, HSV_PURPLE},     // BACKLIGHT
+    {12,    1, HSV_PURPLE},     // RIGHT
+    {15,    2, HSV_PURPLE},     // UP/DOWN
+    {20,    1, HSV_PURPLE},     // LEFT
+    {0+27,  6, HSV_PURPLE}      // BACKLIGHT
 );
 const rgblight_segment_t PROGMEM my_raise_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,    6, HSV_BLUE},
-    {0+27, 6, HSV_BLUE}
+    {0,    6, HSV_BLUE},        // BACKLIGHT
+    {0+27, 6, HSV_BLUE}         // BACKLIGHT
 );
 const rgblight_segment_t PROGMEM my_adjust_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,    6, HSV_GREEN},
-    {0+27, 6, HSV_GREEN}
+    {0,    6, HSV_GREEN},       // BACKLIGHT
+    {0+27, 6, HSV_GREEN}        // BACKLIGHT
 );
 const rgblight_segment_t PROGMEM my_plover_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0,    6, HSV_RED},
-    {0+27, 6, HSV_RED}
+    {0,    6, HSV_RED},         // BACKLIGHT
+    {24,   1, HSV_MAGENTA},     // DEFAULT
+    {0+27, 6, HSV_RED}          // BACKLIGHT
 );
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     my_default_layer,
     my_lower_layer,
     my_raise_layer,
     my_adjust_layer,
-    my_plover_layer
+    my_plover_layer,
+    my_caps_layer
 );
 
 void keyboard_post_init_user(void) {
@@ -187,9 +198,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
-// bool led_update_user(led_t led_state) {
-//     rgblight_set_layer_state(0, led_state.caps_lock)
-// }
+
+// FIXME: This one only updates the master.
+bool led_update_user(led_t led_state) {
+    rgblight_set_layer_state(5, led_state.caps_lock);
+    return true;
+}
 
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
