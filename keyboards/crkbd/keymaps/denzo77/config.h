@@ -33,12 +33,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_SERIAL_PD2
 
-#define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 100
+// repeat held key
+// #define TAPPING_FORCE_HOLD
+#undef TAPPING_FORCE_HOLD
+// How long can you hold the key until it counts as a hold.
+#define TAPPING_TERM 150
+// Number of times to tap for tap toggle (TT) macro.
+#define TAPPING_TOGGLE 2
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
-    #define RGBLIGHT_ANIMATIONS
+    #undef RGBLIGHT_ANIMATIONS
     #define RGBLED_NUM 27
     #define RGBLIGHT_LIMIT_VAL 60
     #define RGBLIGHT_HUE_STEP 10
