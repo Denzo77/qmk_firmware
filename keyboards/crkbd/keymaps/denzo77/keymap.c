@@ -32,7 +32,8 @@ enum custom_keycodes {
   PLOVER,
   BACKLIT,
   RGBRST,
-  EXT_PLV
+  EXT_PLV,
+  SHIFT,
 };
 
 enum macro_keycodes {
@@ -49,20 +50,26 @@ enum macro_keycodes {
 
 
 // Tap for key, hold for shift.
-#define SFT_ENT LSFT_T(KC_ENTER)
-#define SFT_SPC RSFT_T(KC_SPACE)
+#define SFT_F LSFT_T(KC_F)
+#define CTRL_D LCTL_T(KC_D)
+#define ALT_S LALT_T(KC_S)
+#define LGUI_A LGUI_T(KC_A)
+#define SFT_J RSFT_T(KC_SPACE)
+#define CTRL_K RCTL_T(KC_SPACE)
+#define ALT_L RALT_T(KC_SPACE)
+#define GUI_SCN RGUI_T(KC_SCLN)
 // #define SFT_UNDS RSFT_T(KC_MINS)  // This cannot send an underscore :(
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        PLOVER,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_MPLY,\
-  //|--------+--------+-co-------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_CAPS,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_MNXT,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_CAPS,  LGUI_A,   ALT_S,  CTRL_D,   SFT_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_MNXT,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_MPRV,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL,  LOW_TT, SFT_ENT,    SFT_SPC,   RAISE, KC_RCTL \
+                                          XXXXXXX,  LOW_TT,KC_ENTER,   KC_SPACE,   RAISE, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -71,19 +78,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,  XXXXXXX, KC_HOME,   KC_UP,  KC_END, KC_PGUP,                     KC_BSPC, KC_PLUS, KC_ASTR, KC_LBRC, KC_RBRC, _______,\
+      _______, XXXXXXX, KC_HOME,   KC_UP,  KC_END, KC_PGUP,                      KC_BSPC, KC_PLUS, KC_ASTR, KC_LBRC, KC_RBRC, _______,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______,  XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,                      KC_DEL, KC_MINS,  KC_EQL, KC_NUBS, KC_SLSH, _______,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______ \
+                                          _______, _______, _______,    KC_UNDS, _______, _______ \
                                       //`--------------------------'  `--------------------------'
     ),
 
   [_RAISE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,  KC_ESC, XXXXXXX, KC_DQUO, KC_QUOT, XXXXXXX,                      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,\
+      _______,  KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_PIPE, KC_NUHS, XXXXXXX, KC_UNDS, XXXXXXX,                      XXXXXXX,   KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,\
+      _______, KC_PIPE, KC_NUHS, KC_DQUO, KC_QUOT, XXXXXXX,                      XXXXXXX,   KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -258,6 +265,27 @@ void iota_gfx_task_user(void) {
   matrix_update(&display, &matrix);
 }
 #endif//SSD1306OLED
+
+
+static uint16_t last_keycode = 0;
+
+// mod tap like behaviour
+// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+//   if (record->event.pressed) {
+//     register_code(keycode);
+//   } else {
+//     unregister_code(keycode);
+//   }
+
+//   if (!record->event.pressed && keycode == KC_LCTL && last_keycode == KC_LCTL) {
+//     register_code(KC_ESC);
+//     unregister_code(KC_ESC);
+//   }
+
+//   last_keycode = keycode;
+//   return false;
+// }
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {

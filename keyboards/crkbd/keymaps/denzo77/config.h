@@ -37,10 +37,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define TAPPING_FORCE_HOLD
 #undef TAPPING_FORCE_HOLD
 // How long can you hold the key until it counts as a hold.
-#define TAPPING_TERM 150
+#define TAPPING_TERM 200
 // Number of times to tap for tap toggle (TT) macro.
 #define TAPPING_TOGGLE 2
-// #define PERMISSIVE_HOLD
+#undef PERMISSIVE_HOLD
+#undef IGNORE_MOD_TAP_INTERRUPT
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
