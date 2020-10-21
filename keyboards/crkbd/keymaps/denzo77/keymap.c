@@ -22,6 +22,7 @@ enum layer_names {
   _RAISE,
   _ADJUST,
   _PLOVER,
+  _TEKKEN,
 };
 
 enum custom_keycodes {
@@ -34,6 +35,8 @@ enum custom_keycodes {
   RGBRST,
   EXT_PLV,
   SHIFT,
+  TEKKEN,
+  EXT_TKN
 };
 
 enum macro_keycodes {
@@ -53,11 +56,9 @@ enum macro_keycodes {
 #define SFT_F LSFT_T(KC_F)
 #define CTRL_D LCTL_T(KC_D)
 #define ALT_S LALT_T(KC_S)
-#define LGUI_A LGUI_T(KC_A)
 #define SFT_J RSFT_T(KC_SPACE)
 #define CTRL_K RCTL_T(KC_SPACE)
 #define ALT_L RALT_T(KC_SPACE)
-#define GUI_SCN RGUI_T(KC_SCLN)
 // #define SFT_UNDS RSFT_T(KC_MINS)  // This cannot send an underscore :(
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -65,11 +66,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        PLOVER,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_MPLY,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_CAPS,  LGUI_A,   ALT_S,  CTRL_D,   SFT_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_MNXT,\
+      KC_CAPS,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_LCTL,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_MPRV,\
+      KC_LGUI,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LALT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX,  LOW_TT,KC_ENTER,   KC_SPACE,   RAISE, XXXXXXX \
+                                          KC_LSFT,  LOW_TT,KC_ENTER,   KC_SPACE,   RAISE, KC_RSFT \
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -88,11 +89,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,  KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4, XXXXXXX,\
+       TEKKEN,  KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4, _______,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_PIPE, KC_NUHS, KC_DQUO, KC_QUOT, XXXXXXX,                      XXXXXXX,   KC_F5,   KC_F6,   KC_F7,   KC_F8, XXXXXXX,\
+      _______, KC_PIPE, KC_NUHS, KC_DQUO, KC_QUOT, XXXXXXX,                      XXXXXXX,   KC_F5,   KC_F6,   KC_F7,   KC_F8, _______,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F9,  KC_F10,  KC_F11,  KC_F12, XXXXXXX,\
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,   KC_F9,  KC_F10,  KC_F11,  KC_F12, _______,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,   LOWER,  KC_TAB,    _______, _______, _______ \
                                       //`--------------------------'  `--------------------------'
@@ -120,6 +121,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX,   STN_A,  STN_O,       STN_E,   STN_U, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
+  ),
+  [_TEKKEN] = LAYOUT_split_3x6_3( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      EXT_TKN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_V,                         KC_B, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX,    KC_A,    KC_W,    KC_D, XXXXXXX,                      XXXXXXX,    KC_U,    KC_I,    KC_O,    KC_P, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LGUI, XXXXXXX,    KC_A,    KC_W,    KC_D, XXXXXXX,                      XXXXXXX,    KC_J,    KC_K,    KC_L, KC_SCLN, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LSFT,    KC_S,    KC_S,    XXXXXXX, XXXXXXX, XXXXXXX \
+                                      //`--------------------------'  `--------------------------'
+
   ),
 };
 
@@ -169,9 +182,32 @@ const rgblight_segment_t PROGMEM my_plover_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {0,    6, HSV_RED},         // BACKLIGHT
     {11,   1, HSV_RED},         // HOME
     {24,   1, HSV_RED},         // PLOVER
-    {11+27, 1, HSV_RED},          // HOME
-    {0+27, 6, HSV_RED}          // BACKLIGHT
+    {0+27, 6, HSV_RED},          // BACKLIGHT
+    {11+27, 1, HSV_RED}          // HOME
 );
+
+const rgblight_segment_t PROGMEM my_tekken_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0,    6, RGB_AZURE},         // BACKLIGHT
+
+    {6,   1, RGB_AZURE},        // down
+    {9,   1, RGB_AZURE},        // select
+    {14,   1, RGB_AZURE},       // down
+    {11,   2, RGB_AZURE},       // right
+    {15,   2, RGB_AZURE},       // up
+    {19,   2, RGB_AZURE},       // left
+
+    {24,   1, HSV_BLUE},        // TEKKEN
+    
+    {0+27, 6,  RGB_AZURE},      // BACKLIGHT
+    {9+27,   2, RGB_AZURE},     // start
+    {11+27,   1, HSV_BLUE},     // X
+    {12+27,   1, HSV_GREEN},    // A
+    {15+27,   1, HSV_YELLOW},   // Y
+    {16+27,   1, HSV_RED},      // B
+    {19+27,   2, RGB_AZURE},    // shoulder buttons
+    {21+27,   2, RGB_AZURE}    // shoulder buttons
+);
+
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     my_default_layer,
     my_lower_layer,
@@ -179,6 +215,7 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     // my_adjust_layer,
     my_plover_layer,
     my_caps_layer
+    // my_tekken_layer
 );
 
 void keyboard_post_init_user(void) {
@@ -198,6 +235,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // rgblight_set_layer_state(_RAISE,  layer_state_cmp(state, _RAISE));
     // rgblight_set_layer_state(_ADJUST, layer_state_cmp(state, _ADJUST));
     rgblight_set_layer_state(2, layer_state_cmp(state, _PLOVER));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _TEKKEN));
     return state;
 }
 
@@ -267,26 +305,6 @@ void iota_gfx_task_user(void) {
 #endif//SSD1306OLED
 
 
-static uint16_t last_keycode = 0;
-
-// mod tap like behaviour
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//   if (record->event.pressed) {
-//     register_code(keycode);
-//   } else {
-//     unregister_code(keycode);
-//   }
-
-//   if (!record->event.pressed && keycode == KC_LCTL && last_keycode == KC_LCTL) {
-//     register_code(KC_ESC);
-//     unregister_code(KC_ESC);
-//   }
-
-//   last_keycode = keycode;
-//   return false;
-// }
-
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
 #ifdef SSD1306OLED
@@ -335,6 +353,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case EXT_PLV:
       if (record->event.pressed) {
         layer_off(_PLOVER);
+      }
+      return false;
+      break;
+    case TEKKEN:
+      if (!record->event.pressed) {
+        layer_on(_TEKKEN);
+      }
+      return false;
+      break;
+    case EXT_TKN:
+      if (record->event.pressed) {
+        layer_off(_TEKKEN);
       }
       return false;
       break;

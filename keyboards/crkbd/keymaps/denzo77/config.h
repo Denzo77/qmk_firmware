@@ -40,8 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 200
 // Number of times to tap for tap toggle (TT) macro.
 #define TAPPING_TOGGLE 2
-#undef PERMISSIVE_HOLD
-#undef IGNORE_MOD_TAP_INTERRUPT
+// #define PERMISSIVE_HOLD
+// #undef IGNORE_MOD_TAP_INTERRUPT
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
