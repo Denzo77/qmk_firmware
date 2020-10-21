@@ -43,14 +43,8 @@ enum macro_keycodes {
   KC_SAMPLEMACRO,
 };
 
-
-#define ST_BOLT QK_STENO_BOLT
-#define ST_GEM  QK_STENO_GEMINI
-
-
 // Double tap toggle lower
 #define LOW_TT TT(_LOWER)
-
 
 // Tap for key, hold for shift.
 #define SFT_F LSFT_T(KC_F)
@@ -103,9 +97,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         RESET,  RGBRST, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, ST_BOLT,\
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  ST_GEM,\
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,_______,  _______,    _______, _______, _______ \
                                       //`--------------------------'  `--------------------------'
@@ -247,6 +241,10 @@ bool led_update_user(led_t led_state) {
 }
 
 void matrix_init_user(void) {
+    #ifdef STENO_ENABLE
+      // emulate gemini as it subjectively works better.
+      steno_set_mode(STENO_MODE_GEMINI); // or STENO_MODE_BOLT
+    #endif
     #ifdef RGBLIGHT_ENABLE
       RGB_current_mode = rgblight_config.mode;
     #endif
