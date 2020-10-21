@@ -46,15 +46,6 @@ enum macro_keycodes {
 // Double tap toggle lower
 #define LOW_TT TT(_LOWER)
 
-// Tap for key, hold for shift.
-#define SFT_F LSFT_T(KC_F)
-#define CTRL_D LCTL_T(KC_D)
-#define ALT_S LALT_T(KC_S)
-#define SFT_J RSFT_T(KC_SPACE)
-#define CTRL_K RCTL_T(KC_SPACE)
-#define ALT_L RALT_T(KC_SPACE)
-// #define SFT_UNDS RSFT_T(KC_MINS)  // This cannot send an underscore :(
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x6_3( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -193,7 +184,7 @@ const rgblight_segment_t PROGMEM my_tekken_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {24,   1, HSV_BLUE},        // TEKKEN
     
     {0+27, 6,  RGB_AZURE},      // BACKLIGHT
-    {9+27,   2, RGB_AZURE},     // start
+    {9+27,    1, RGB_AZURE},     // start
     {11+27,   1, HSV_BLUE},     // X
     {12+27,   1, HSV_GREEN},    // A
     {15+27,   1, HSV_YELLOW},   // Y
@@ -208,8 +199,8 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
     // my_raise_layer,
     // my_adjust_layer,
     my_plover_layer,
-    my_caps_layer
-    // my_tekken_layer
+    my_caps_layer,
+    my_tekken_layer
 );
 
 void keyboard_post_init_user(void) {
