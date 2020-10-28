@@ -111,11 +111,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       EXT_TKN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_V,                         KC_B, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX,    KC_A,    KC_W,    KC_D, XXXXXXX,                      XXXXXXX,    KC_U,    KC_I,    KC_O,    KC_P, XXXXXXX,\
+      KC_CAPS, XXXXXXX,    KC_Q,    KC_W,    KC_E, XXXXXXX,                      XXXXXXX,    KC_U,    KC_I,    KC_O,    KC_P, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LGUI, XXXXXXX,    KC_A,    KC_W,    KC_D, XXXXXXX,                      XXXXXXX,    KC_J,    KC_K,    KC_L, KC_SCLN, XXXXXXX,\
+      KC_LGUI, XXXXXXX,    KC_A,    KC_S,    KC_D, XXXXXXX,                      XXXXXXX,    KC_J,    KC_K,    KC_L, KC_SCLN, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LSFT,    KC_S,    KC_S,    XXXXXXX, XXXXXXX, XXXXXXX \
+                                          XXXXXXX, KC_LSFT,KC_SPACE,       KC_C,    KC_N, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -187,8 +187,8 @@ const rgblight_segment_t PROGMEM my_tekken_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {9+27,    1, RGB_AZURE},     // start
     {11+27,   1, HSV_BLUE},     // X
     {12+27,   1, HSV_GREEN},    // A
-    {15+27,   1, HSV_YELLOW},   // Y
-    {16+27,   1, HSV_RED},      // B
+    {15+27,   1, HSV_RED},      // B
+    {16+27,   1, HSV_YELLOW},   // Y
     {19+27,   2, RGB_AZURE},    // shoulder buttons
     {21+27,   2, RGB_AZURE}    // shoulder buttons
 );
