@@ -111,9 +111,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       EXT_TKN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_V,                         KC_B, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_CAPS, XXXXXXX,    KC_Q,    KC_W,    KC_E, XXXXXXX,                      XXXXXXX,    KC_U,    KC_I,    KC_O,    KC_P, XXXXXXX,\
+      KC_CAPS, XXXXXXX,    KC_Q,    KC_W,    KC_E,    KC_R,                      XXXXXXX,    KC_U,    KC_I,    KC_O,    KC_P, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LGUI, XXXXXXX,    KC_A,    KC_S,    KC_D, XXXXXXX,                      XXXXXXX,    KC_J,    KC_K,    KC_L, KC_SCLN, XXXXXXX,\
+      KC_LGUI, XXXXXXX,    KC_A,    KC_S,    KC_D,    KC_F,                      XXXXXXX,    KC_J,    KC_K,    KC_L, KC_SCLN, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, KC_LSFT,KC_SPACE,       KC_C,    KC_N, XXXXXXX \
                                       //`--------------------------'  `--------------------------'
@@ -174,23 +174,23 @@ const rgblight_segment_t PROGMEM my_plover_layer[] = RGBLIGHT_LAYER_SEGMENTS(
 const rgblight_segment_t PROGMEM my_tekken_layer[] = RGBLIGHT_LAYER_SEGMENTS(
     {0,    6, RGB_AZURE},         // BACKLIGHT
 
-    {6,   1, RGB_AZURE},        // down
-    {9,   1, RGB_AZURE},        // select
-    {14,   1, RGB_AZURE},       // down
-    {11,   2, RGB_AZURE},       // right
-    {15,   2, RGB_AZURE},       // up
-    {19,   2, RGB_AZURE},       // left
+    {12,   1, RGB_AZURE},       // right
+    {15,   1, RGB_AZURE},       // down
+    {16,   1, RGB_AZURE},       // up
+    {20,   1, RGB_AZURE},       // left
 
     {24,   1, HSV_BLUE},        // TEKKEN
     
-    {0+27, 6,  RGB_AZURE},      // BACKLIGHT
-    {9+27,    1, RGB_AZURE},     // start
+    {0+27,    6,  RGB_AZURE},   // BACKLIGHT
+    {6+27,    1, RGB_AZURE},    // R3
+    {9+27,    1, RGB_AZURE},    // start
+    {13+27,   1, RGB_AZURE},    // L3
     {11+27,   1, HSV_BLUE},     // X
     {12+27,   1, HSV_GREEN},    // A
     {15+27,   1, HSV_RED},      // B
     {16+27,   1, HSV_YELLOW},   // Y
-    {19+27,   2, RGB_AZURE},    // shoulder buttons
-    {21+27,   2, RGB_AZURE}    // shoulder buttons
+    {19+27,   2, RGB_AZURE},    // R1/R2
+    {21+27,   2, RGB_AZURE}     // L1/L2
 );
 
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
