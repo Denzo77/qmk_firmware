@@ -46,6 +46,8 @@ enum macro_keycodes {
 // Double tap toggle lower
 #define LOW_TT TT(_LOWER)
 #define CPS_GUI LGUI_T(KC_CAPS)
+#define ENT_SFT LSFT_T(KC_ENTER)
+#define SPC_SFT RSFT_T(KC_SPACE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x6_3(
@@ -56,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RCTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LSFT,  LOW_TT,KC_ENTER,   KC_SPACE,   RAISE, KC_RSFT
+                                          KC_LSFT,  LOW_TT, ENT_SFT,    SPC_SFT,   RAISE, KC_RSFT
                                       //`--------------------------'  `--------------------------'
   ),
   [_LOWER] = LAYOUT_split_3x6_3(
@@ -76,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_PIPE, KC_NUHS, KC_DQUO, KC_QUOT, KC_ESC,                       XXXXXXX, KC_BSPC,  KC_DEL, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, KC_LBRC, KC_LCBR, KC_LPRN, XXXXXXX,                      XXXXXXX, KC_RPRN, KC_RCBR, KC_RBRC, XXXXXXX, _______,
+      _______, KC_LABK, KC_LBRC, KC_LCBR, KC_LPRN, XXXXXXX,                      XXXXXXX, KC_RPRN, KC_RCBR, KC_RBRC, KC_RABK, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,   LOWER, _______,    _______, _______, _______ 
                                       //`--------------------------'  `--------------------------'
